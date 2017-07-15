@@ -1,0 +1,39 @@
+{
+  "name": "SPG - Seating Plan Generator v2",
+  "description": "CALM4 Extension",
+  "version": "2.51",
+  "permissions": [
+    "tabs", "https://*/*"
+  ],  
+  "background": {
+    "persistent": false,
+    "scripts": ["background.js"]
+  },
+  "content_scripts": [
+    { "run_at": "document_end",
+      "matches": ["https://calm.dhamma.org/*/course_applications", "https://test.calm.dhamma.org/*/course_applications"],
+      "js": ["others/jquery-3.1.1.min.js","content.js"]
+    }
+  ],
+  "browser_action": {
+      "default_title": "Seating Plan Generator v2",
+      "default_icon": "enabled.png",
+      "default_popup": "popup_enabled.html"
+  },
+  "icons": { "16": "icons/icon16.png",
+           "48": "icons/icon48.png",
+          "128": "icons/icon128.png" 
+  },
+  "manifest_version": 2,
+  
+  "web_accessible_resources": [
+        "html/sp_tab.html",
+        "img/circular.gif",
+		"css/sitPlan.css",
+		"css/loc.css",
+		"others/zepto.dragswap.js",
+		"others/zepto.min.js",
+		"others/sp_tab.js",
+		"enabled.png"
+    ]
+}
