@@ -1,7 +1,7 @@
 {
-  "name": "SPG - Seating Plan Generator v2",
+  "name": "SPG - Seating Plan Generator v3",
   "description": "CALM4 Extension",
-  "version": "2.51",
+  "version": "3.0",
   "permissions": [
     "tabs", "https://*/*"
   ],  
@@ -15,11 +15,6 @@
       "js": ["others/jquery-3.1.1.min.js","content.js"]
     }
   ],
-  "browser_action": {
-      "default_title": "Seating Plan Generator v2",
-      "default_icon": "enabled.png",
-      "default_popup": "popup_enabled.html"
-  },
   "icons": { "16": "icons/icon16.png",
            "48": "icons/icon48.png",
           "128": "icons/icon128.png" 
@@ -31,8 +26,6 @@
         "img/circular.gif",
 		"css/sitPlan.css",
 		"css/loc.css",
-		"others/zepto.dragswap.js",
-		"others/zepto.min.js",
 		"others/sp_tab.js",
 		"enabled.png"
     ]
