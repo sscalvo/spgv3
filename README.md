@@ -1,5 +1,5 @@
 # spgv3
-3rd iteration over SPG project
+**3rd iteration over SPG project**
 The aim is (not in order/priority): 
 
 . Use Github
