@@ -1,0 +1,300 @@
+	@page { /** printing **/
+	  size: A4;
+	  margin: 0;
+	}
+@media print {  /** printing **/
+    html, body {
+        width: 210mm;
+        height: 297mm;        
+    }
+	.noPrint {
+		display: none;
+		
+	}
+    .page {
+           margin: 0;
+           border: initial;
+           border-radius: initial;
+           width: initial;
+           min-height: initial;
+           box-shadow: initial;
+           background: initial;
+           page-break-after: always;
+    }
+}
+body {
+	font-family: arial;
+	margin: 0px;
+}
+
+#course_venue{
+	font-size: 20px;
+}
+
+#course_date_start{
+	font-size: 14px;
+}
+#course_date_end{
+	font-size: 14px;
+}
+
+#course_gender{
+	text-align:center;
+	font-size: 20px;
+}
+
+td.dhamma_seat{
+	color: black;
+	background-color: SteelBlue;
+	border-radius: 4px;
+	height:60px;
+	border: 5px dotted black;
+
+}
+td .user_info{
+	background: #f9ef93;
+	display:block;
+	text-align:center;
+	margin:0 auto;
+}
+
+.main-container {
+	display:flex; 
+	justify-content: space-between;
+	background: #EEEEEE;
+}
+
+
+table.legend{
+	border: 2px solid black;
+}
+
+/* styles applied on method sp_tab.js->cellContent()*/
+.given_name{
+	font-size: 20pt;
+}
+
+.family_name{
+	font-size: 14pt;
+}
+
+.age{
+	font-size: 14pt;
+	float:  right;
+	
+}
+
+.big_sitserved{
+	float:  right;
+}
+
+.sitserved{
+  width: 100%;
+}
+
+/* end */
+
+.old_std{
+	border: 2px dashed black;
+	padding: 3px;
+	background:  #FFCC99 ;
+    background-image:none !important;
+    -webkit-animation: fade 1s ease-in-out; 
+       -moz-animation: fade 1s ease-in-out; 
+         -o-animation: fade 1s ease-in-out; 
+            animation: fade 1s ease-in-out; 
+}
+
+.new_std{
+	border: 2px dashed black;
+	padding: 3px;
+	background:  #FFFFCC;
+    background-image:none !important;
+    -webkit-animation: fade 1s ease-in-out; 
+       -moz-animation: fade 1s ease-in-out; 
+         -o-animation: fade 1s ease-in-out; 
+            animation: fade 1s ease-in-out; 
+}
+
+.no_std{
+	border: 1px dotted black;
+	padding: 3px;
+	background:  #FFFFFF;
+	height: 100px ;
+
+}
+
+@-webkit-keyframes fade {
+  0% { background-color: #113311; }
+  50%   { background-color: #FFFFFF;  }
+  100% { background-color: #113311; }
+}
+@-moz-keyframes fade {
+  0% { background-color: #113311; }
+  50%   { background-color: #FFFFFF;  }
+  100% { background-color: #113311; }
+}
+@-o-keyframes fade{
+  0% { background-color: #113311; }
+  50%   { background-color: #FFFFFF;  }
+  100% { background-color: #113311; }
+}
+@keyframes fade {
+  0% { background-color: #113311; }
+  50%   { background-color: #FFFFFF;  }
+  100% { background-color: #113311; }
+}
+
+
+
+/* make drag container visible */
+#redips-drag {
+	
+	display: table;
+	float: left;
+}
+
+/* tables */
+div#redips-drag table {
+	border-collapse: collapse;
+	margin: 10px;
+	font-size: 20pt;
+	text-align: center;
+}
+
+/* table cells */
+div#redips-drag td {
+	border: 0px solid navy;
+	height: 1px;
+	padding: 2px;
+}
+
+/* DIV elements */
+.redips-drag {
+	margin: auto;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	font-size: 12pt;
+	text-align: left;
+	width: 180px;
+	height: 80px;
+	/*line-height: 40px;*/
+	/* background-color: white; */
+	/* round corners */
+	border-radius: 4px; /* Opera, Chrome */
+	-moz-border-radius: 4px; /* FF */
+	/*  background-color: #CDE1F2; */
+	/* border: 1px solid SteelBlue; */
+}
+
+.joined{ /* student joined course after map was saved and now reloaded*/
+	border: 3px solid pink;
+}
+
+.zepto_style_drag_class {
+		-webkit-transform: scale(0.9);
+		-moz-transform: scale(0.9);
+		-o-transform: scale(0.9);
+		-ms-transform: scale(0.9);
+		transform: scale(0.9);
+		-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+		filter: alpha(opacity=30);
+		opacity: 0.3;
+	}
+	
+.zepto_style_drop_class {
+	-webkit-animation: drop 1s ease;
+	-moz-animation: drop 1s ease;
+	-ms-animation: drop 1s ease;
+	-o-animation: drop 1s ease;
+	animation: drop 1s ease;
+}
+
+	@keyframes "drop" {
+		0%, 100% {
+			background: #FF9933;
+			color: #fff;
+		}
+		50% {
+			color: #FF9933;
+			background: #fff;
+		}
+	}
+
+	@-moz-keyframes drop {
+		0%, 100% {
+			background: #FF9933;
+			color: #fff;
+		}
+		50% {
+			color: #FF9933;
+			background: #fff;
+		}
+
+	}
+
+	@-webkit-keyframes "drop" {
+		0%, 100% {
+			background: #FF9933;
+			color: #fff;
+		}
+		50% {
+			color: #FF9933;
+			background: #fff;
+		}
+
+	}
+
+	@-ms-keyframes "drop" {
+		0%, 100% {
+			background: #FF9933;
+			color: #fff;
+		}
+		50% {
+			color: #FF9933;
+			background: #fff;
+		}
+
+	}
+
+	@-o-keyframes "drop" {
+		0%, 100% {
+			background: #FF9933;
+			color: #fff;
+		}
+		50% {
+			color: #FF9933;
+			background: #fff;
+		}
+
+	}
+/* green objects */
+.green {
+	border: 2px solid #499B33;
+}
+
+/* orange objects */
+.orange {
+	border: 2px dashed red;
+}
+
+/* trash cell */
+.redips-trash {
+	color: white;
+	background-color: SteelBlue;
+	font-size: 15pt;
+}
+
+/* instructions  */
+.instructions {
+	float: left;
+	border: 2px dashed LightBlue;
+	display: table;
+	margin-left: 15px;
+	width: 220px;
+	padding: 15px;
+	color: #555;
+	font-size: 12px;
+	text-align: justify;
+	background-color: #eee;
+}
