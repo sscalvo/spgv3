@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+	<head>
+		<meta name="author" content="sscalvo"/>
+		<meta name="description" content="Visual interface to design the layout of the Hall"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/><!-- "position: fixed" fix for Android 2.2+ -->
+		<link rel="stylesheet" href="../css/sitPlan.css" type="text/css" media="screen"/>
+		<link rel="stylesheet" href="../css/sitPlan_print.css" type="text/css" media="print"/>
+<!-- External libraries -->
+		<script type="text/javascript" src="../lib/jquery-3.1.1.js"></script>
+		<script type="text/javascript" src="../lib/md5.js"></script><!-- used by auto-updater to compare 2 different downloads of  course_applications.json -->
+		<script type="text/javascript" src="../lib/redips-drag-source.js"></script>
+<!-- Own libraries -->
+<!--		<script type="text/javascript" src="../lib/spg_2_redips.js"></script> -->
+		<script type="text/javascript" src="../lib/student.js"></script>
+		<script type="text/javascript" src="../lib/hall.js"></script>
+		<script type="text/javascript" src="../lib/layout.js"></script>
+<!-- Starter -->
+		<script type="text/javascript" src="../sp_tab.js" defer></script>
+		<title>SPG - Seating Plan Generator v3</title>
+	</head>
+	<body>
+		
+		<div id="centerName"></div>
+		
+		<!-------------------CONTROL PANEL (hidden when printing by sitPlan.css) (top row)--------------------------------->
+		<div >
+		<span id="course_venue" ></span> - <span id="course_gender" ></span> (from <span id="course_date_start" ></span> to <span id="course_date_end" ></span>)
+		
+		<!-- <span >Seating Plan Generator v2.5 </span> -->
+		</div>
+		<div class="noPrint">
+		<table  width="100%" border="0">
+				<tr>
+					<td colspan="5"><span id="info_display" class="user_info">Saved</span></td>
+				</tr>
+				<tr>
+					<td class="title" >Select number of columns:</td>
+					<td class="title">Select gender:</td>
+					<td rowspan="1"><input id="button_add_row" type="button" value="Add extra row" /> (Extra <b>empty</b> rows wont be saved) </td>
+					<td rowspan="1"><input id="button_print" type="button" value="Print.." /> <br/> </td>
+					<td rowspan="2">
+						<div class="orange">
+							<table>
+							<tr>
+								<!-- <input id="button_save" type="button" value="Save" /> -->
+								<td><input id="button_find_updates" type="button" value="TEST: Look manually for updates in CALM" /> (SPG looks for updates every 5 minutes. i.e: <br/>Add/remove any student (or just change his/her gender) and click the button)<br/></td>
+							</tr>
+							<tr>
+								<td><input id="button_save" type="button" value="TEST: Save" disabled/> (Everything gets saved real-time)</td>
+							</tr>
+							</table>
+						</div>
+					</td>
+					
+				
+					<!-- <td class="title">Drag&Drop behaviour:</td> -->
+				</tr>
+				<tr>
+					<td>
+						<div style="margin-left:0px;">
+							<form id="cols">
+								<input type="radio" id="4col" name="ncol" value="4" />
+								<label for="4col">4</label>
+								<input type="radio" id="5col" name="ncol" value="5" />
+								<label for="5col">5</label>            
+								<input type="radio" id="6col" name="ncol" value="6"  checked="true" />
+								<label for="6col">6</label>             
+								<input type="radio" id="7col" name="ncol" value="7" />
+								<label for="7col">7</label>             
+								<input type="radio" id="8col" name="ncol" value="8" />
+								<label for="8col">8</label>
+							</form>
+						</div>
+					</td>
+					<td>
+						<div style="margin-left:0px;">
+						<form id="genders">
+							<input type="radio" id="male" name="gender" value="male" checked="true"/>
+							<label for="lim">Male</label>
+							<input type="radio" id="female" name="gender" value="female" />
+							<label for="lif">Female</label>   
+						</form>	
+						</div>
+					</td>
+					<td></td>
+					<td></td>
+
+				<!--
+				<td class="title">Map legend:</td>
+				<tr>
+				-->
+				<!--
+				<tr><td class="title">Printing:</td></tr>
+					<tr><td>
+						<div style="margin-left:20px;">
+						<input type="submit" style="float:left;" id="btnPrint" value="Print Seating plan..." >
+					</div>
+					</td></tr>
+				-->
+					<td><div style="margin-left:20px;">
+						<form id="drop_options">
+							<input type="radio" id="switch" name="drop_option" value="switch" checked="true"/><label for="switch">Switch students on drop</label>
+							<input type="radio" id="switching" name="drop_option" value="shift" />
+							<label for="switching"  >Switch students continuosly</label> 
+						</form>
+						</div>
+					</td>
+				<!--	-->
+				</tr>
+			</table>
+
+		</div> <!-- class=noPrint -->
+		<!---------------------------END CONTROL PANEL--------------------------------------------->
+		<!-----------------------------SPG table (flex-item 1)-------------------------------------------------->
+		
+		<div class="main-container" > <!-- display:flex -->
+		<div id="main-flex-item">
+			<!-- drag1 DIV container -->
+			<div id="redips-drag">
+			<table id="table_arrivals" border="1">
+			<colgroup><col width="203"><col width="203"></colgroup>
+	<tr>
+	<td style="background-color:red;"><div id="444" class="redips-drag">hola</div></td>
+	<td><div id="555" class="redips-drag">adios</div></td>
+	</tr>
+</table>
+
+				<!-- dinamycally generated empty table -->
+				<span id="entryPoint"/>
+
+
+			</div>
+			<!-- instructions -->
+		</div> <!-- id="main-flex-item" -->
+		</div> <!-- display:flex -->
+		<!-----------------------------END SPG table -------------------------------------------------->
+		<span id="savedContent"></span>
+	</body>
+	
+</html>

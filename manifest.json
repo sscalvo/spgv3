@@ -12,9 +12,14 @@
   "content_scripts": [
     { "run_at": "document_end",
       "matches": ["https://calm.dhamma.org/*/course_applications", "https://test.calm.dhamma.org/*/course_applications"],
-      "js": ["lib/jquery-3.1.1.js","content.js"]
+      "js": ["lib/jquery-3.1.1.js", "lib/redips-drag-source.js", "content.js"]
     }
   ],
+  "browser_action": {
+      "default_title": "Seating Plan Generator v3",
+      "default_icon": "icons/enabled.png",
+      "default_popup": "popup_enabled.html"
+  },
   "icons": { "16": "icons/icon16.png",
            "48": "icons/icon48.png",
           "128": "icons/icon128.png" 
@@ -26,7 +31,7 @@
         "img/circular.gif",
 		"css/sitPlan.css",
 		"css/loc.css",
-		"others/sp_tab.js",
-		"enabled.png"
+		"icons/enabled.png",
+		"icons/disabled.png"
     ]
 }

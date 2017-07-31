@@ -1,4 +1,8 @@
-var id_button_injection = {"CALM":"course-applications-datatable_filter", "VRAY":"some_html_id"};
+//CONTENT.JS
+//Here only the code to wire the original CALM webpage with our SPG-extension (adding the green button).
+//No extension functionality here but in sp_tab.js
+var inject_button_in = {"CALM":"course-applications-datatable_filter", "VRAY":"some_html_id"};
+
 
 /**GLIPHICON BUTTON to OPEN NEW TAB
 * Inject a button into the CALM webpages. Final html output should look like this:
@@ -8,7 +12,6 @@ var id_button_injection = {"CALM":"course-applications-datatable_filter", "VRAY"
 	</div>
 	On the 'onclick' event of this button is where happens the begining of SPG
 */
-
 	var span_button = document.createElement('span'); //<div ..>
 	span_button.id = "div_spg_button";
 	
@@ -16,7 +19,6 @@ var id_button_injection = {"CALM":"course-applications-datatable_filter", "VRAY"
 	label_btn.setAttribute("for", "spg_button");
     label_btn.className ="btn";
 	label_btn.innerHTML ="<span style='background-color: yellow;'>&nbsp;<i class='glyphicon glyphicon-equalizer'></i> Hall map&nbsp;</span>"; //No need for label.createElement("i")
-	
 	label_btn.onclick = function(){ //Here BEGINS the creation of the SPG tab
 		try{
 			var path = chrome.extension.getURL("css/sitPlan.css"); //When CALM session has expired, this line throwed a nasty error
@@ -25,9 +27,10 @@ var id_button_injection = {"CALM":"course-applications-datatable_filter", "VRAY"
 			console.log(err);
 			window.location.reload();
 		}
+
 		//Ask background.js to open a new tab for us..
-		chrome.runtime.sendMessage({url : chrome.extension.getURL("html/sp_tab.html"), command: "newTab"}, function(response) {
-			console.log("Content.js requested NEW TAB. background.js says: " +response.farewell);
+		chrome.runtime.sendMessage({url : chrome.extension.getURL("./html/sp_tab.html"), command: "newTab"}, function(response) {
+			console.log("Content.js ");
 		});
 	}
 	//var i_label = document.createElement("i");  //<i.. >
@@ -46,5 +49,5 @@ var id_button_injection = {"CALM":"course-applications-datatable_filter", "VRAY"
 //END    GLIPHICON BUTTON to OPEN NEW TAB
 
 //Add button to CALM-course-page and wait for the user to click it!
-document.getElementById(id_button_injection.CALM).appendChild(span_button);
+document.getElementById(inject_button_in.CALM).appendChild(span_button);
 //TODO: Confirm with Ryan about the existence of "course-applications-datatable_filter" -> Find a new place for the button?

@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Seating Plan Generator</title>
+	<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<script type="text/javascript" src="others/jquery-3.1.1.min.js"></script>
+	<style>
+	#cf3 {
+		position:relative;
+		height:0px;
+		width:0px;
+		margin:0 auto;
+	}
+
+	#cf3 img {
+		position:absolute;
+		left:0;
+		-webkit-transition: opacity 1s ease-in-out;
+		-moz-transition: opacity 1s ease-in-out;
+		-o-transition: opacity 1s ease-in-out;
+		transition: opacity 1s ease-in-out;
+	}
+
+	@keyframes cf3FadeInOut {
+		0%   {  opacity:1;	}
+		45%  {  opacity:1;	}
+		55%  {  opacity:0	}
+		100% {	opacity:0;  }
+	}
+
+	#cf3 img.top {
+		animation-name: cf3FadeInOut;
+		animation-timing-function: ease-in-out;
+		animation-iteration-count: infinite;
+		animation-duration: 2s;
+		animation-direction: alternate;
+	}
+
+    body {
+      margin: 0px;
+      padding: 0px;
+      background: #eeeeee;
+	  width: 350px;	
+	  height: 290px;
+	  font-size: 16px;
+	  //font-family:  "Arial", sans-serif;
+    }
+    h3 {
+      text-align: center;
+      padding: 10px 0px;
+      font-family: sans-serif;
+      //font-size: 0.8em;
+      //width: 100px;
+      //margin-top: 1px;
+      background: #ffffff;
+    }
+	.whitify{
+      text-align: center;
+      padding: 10px 0px;
+      font-family: sans-serif;
+      //font-size: 0.8em;
+      //width: 100px;
+      //margin-bottom: 0px;
+      background: #dddddd;
+	}
+	.hrefstyle{
+      //text-align: right;
+      font-family: sans-serif;
+      font-size: 0.7em;	
+	  padding:0px 10px;
+      }
+	.greenefy{      
+		padding: 0px;
+		margin: 0px 0px;
+		width:100%;
+		height: 5px;
+		background: LimeGreen;
+	}
+	.images {
+		width:44%; /* changed to get some space btween #decal and #about */
+		float:left;
+		//height:45%;
+		background:red;
+		margin-left:2%;
+	}
+
+	#about {
+		font-size:12pt;
+    float:left; /* right to get some space */
+    width:50%;   /* try changing back to left n see what happens */
+    margin-left:2%;
+   // height:45%;
+	
+	background:green;
+	}
+	img.carousel {box-shadow: 5px 5px 10px #aaa;} 
+    </style>
+    <script src="popup.js"></script>
+  </head>
+  <body>
+  	<h3>Seating Plan Generator is ENABLED<div id="cf3" ><img class="bottom" src="enabled.png" /><img class="top" src="disabled.png" /></div></h3>
+	<table border="0" style="margin:5px; padding:5px">
+	<tr><td>
+		Click on the <span style="background-color: yellow;"><i class='glyphicon glyphicon-equalizer'></i> Hall map</span> button to load SPG and start designing your Seating plan.
+	</td>
+	</tr>
+	<tr><td  >
+		Your <a href="../media/feedback.html">feedback</a> is very useful for further improvements.
+		<br/>
+	</td>
+	</tr>
+	<tr><td  >
+		<font color="deeppink" size="2">Keep in mind this is a third-party software (out of the official CALM4 team) so unexpected things may happen. Please, <b>always</b> double check the printed SPG plan with the real list of students.</font>
+	</td>
+	</tr>
+	<tr><td colspan="2">
+	<div style="text-align: right;">Have a good course!</div>
+	
+	</td>
+	</tr>
+	</table>
+	</div>
+
+	<div class="greenefy"/>
+  </body>
+</html>
