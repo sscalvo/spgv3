@@ -21,7 +21,7 @@ var inject_button_in = {"CALM":"course-applications-datatable_filter", "VRAY":"s
 	label_btn.innerHTML ="<span style='background-color: yellow;'>&nbsp;<i class='glyphicon glyphicon-equalizer'></i> Hall map&nbsp;</span>"; //No need for label.createElement("i")
 	label_btn.onclick = function(){ //Here BEGINS the creation of the SPG tab
 		try{
-			var path = chrome.extension.getURL("css/sitPlan.css"); //When CALM session has expired, this line throwed a nasty error
+			var path = chrome.extension.getURL("css/sitPlan.css"); //When CALM session has expired, this line will throw an error
 		}
 		catch(err){
 			console.log(err);

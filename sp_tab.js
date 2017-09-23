@@ -4,9 +4,25 @@
 //MODEL
 var hall = null;
 var layout = null;
-var view = {};
+var form_data = {}; // control panel values (gender, ncols, etc) are stored here
+var view = { 
+				//METHODS
+				//Show Chrome PRINT window
+				"buttonPrint": function () { window.print(); },
+				// function called on "button_find_updates" click
+				"buttonFindUpdates": function () { 	autoUpdater(); },
+				// function called on "button_add_row" click
+				"buttonAddRow": function () {
+					extra_rows[form_data.gender]++;
+					console.log("Add_row clicked with extra_rows." + form_data.gender + " = " + extra_rows[form_data.gender]);
+					init(sp, form_data, ADD_ROW);
+				},
+				// buttton Save
+				"buttonSave": function(){ alert("boton Save!!");}
+};
 
-var table_id = "myTable";
+var id_table_students = "studentsTable";  //hardcoded in sitPlan.css
+var id_table_arrivals = "arrivalsTable";
 var id_destination = "entryPoint";
 
 
@@ -18,23 +34,8 @@ var calm_tabId = 0;
 
 
 
-// SAVE button: 
-//view.buttonSave = save_to_CALM;
 	
-// PRINT button: 
-view.buttonPrint = function () { window.print() };
-	
-// function called on "button_find_updates" click
-view.buttonFindUpdates = function () {
-	autoUpdater();
-}
 
-// function called on "button_add_row" click
-view.buttonAddRow = function () {
-	extra_rows[form_data.gender]++;
-	console.log("Add_row clicked with extra_rows." + form_data.gender + " = " + extra_rows[form_data.gender]);
-	init(sp, form_data, ADD_ROW);
-}
 
 
 /** Downloads the sutdents-JSON object or this course and stores it on the global "sp" object. Asynchronous.
@@ -51,31 +52,27 @@ function getStudentsJSON(url_download_json){
 		error: function(request, status, err) {
 			// timeout (or anything else) -> reload the page and try again
 			console.log("SPG->sp_tab.js->getStudentsJSON says: Error - " + request + status + err);
-			alert("Your CALM session has expired (timed-out)\n Please login again into CALM and then come back to SPG\n. " + calm_tabId);
+			alert("Your CALM session has expired (timed-out)\n You will be redirected to CALM.\n Please login again into CALM and then come back to SPG\n. " );//+ calm_tabId);
 			screenBlock.style.display = "none";  //SPGv2: unblock screen after AJAX in sp_tab.js
-			//chrome.tabs.update(calm_tabId, {active: true});
+			chrome.tabs.update(calm_tabId, {active: true}); 
 		},
 		complete: function (data_response) {// data_response includes ALL the info
 		},
 		success: function(course_json,status,xhr){ //json is the JSON object
-			form_data = getFormData(); 
-			{ 	//REMOVE THIS BLOCK as soon as CALM provides 'number_of_columns' and 'number_of_rows' (not yet in July 2017)
-				var numStd = course_json.sitting[form_data.gender].old.length + course_json.sitting[form_data.gender].new.length;
-				course_json.number_of_columns = course_json.number_of_columns || 6; //FUTURE REMOVE! : 6 by default. course_json doesn't provide 'number_of_columns' property yet. Remove this line when CALM complies with  'number_of_columns' ( not yet 26/07) 
-				var nrows = Math.ceil(numStd / course_json.number_of_columns); //Number of rows. Thus, (numStd <= nrows*ncols) will be true always
-				course_json.number_of_rows = course_json.number_of_rows || nrows; //6 by default. course_json doesn't provide 'number_of_columns' property yet. Remove this line when CALM sends number_of_columns ( not yet 26/07) 
-			}
+			form_data = getFormData(); //get defaut values from html form
+			var numStd = course_json.sitting[form_data.gender].old.length + course_json.sitting[form_data.gender].new.length;
+			//If 'number_of_columns' and 'number_of_rows' exist in course_json (from a previous session), use them instead the values of form_data
+			course_json.sitting[form_data.gender].number_of_columns = course_json.sitting[form_data.gender].number_of_columns || form_data.ncols; //FUTURE REMOVE! : 6 by default. course_json doesn't provide 'number_of_columns' property yet. Remove this line when CALM complies with  'number_of_columns' ( not yet 26/07) 
+			var nrows = Math.ceil(numStd / ncols); //Number of rows. Thus, (numStd <= nrows*ncols) will be true always
+			course_json.sitting[form_data.gender].number_of_rows = course_json.sitting[form_data.gender].number_of_rows || nrows; //6 by default. course_json doesn't provide 'number_of_columns' property yet. Remove this line when CALM sends number_of_columns ( not yet 26/07) 
+			
 			hall = new Hall(course_json);
-			layout = new Layout(hall, form_data);
-			var table = layout.getEmptyTable(table_id);
-			layout.injectEmptyTable(table, id_destination);
+			layout = new Layout(hall, id_table_students, id_destination); //form_data.gender, form_data.drop_option);
+			layout.render();
 			
+			bindEvents(layout);
 			
-			//console.log(table);
-			REDIPS.drag.loadContent(table_id, "[[\"d16\", 0, 1, \"\", \"C1\"], [\"d17\", 0, 3, \"\", \"C2\"]]");
-
-			redips.init();
-			
+		
 			
 /*			var current_branch = init(sp, form_data, WINDOW_LOAD); //WARNING: Init modifies sp object (because of sort() )
 			if(current_branch.md5 != previous_md5[form_data.gender]){ //TODO: Es temporal. Habra que hacer un update_online_changes desde la primera visita del usuario
@@ -94,21 +91,23 @@ function getStudentsJSON(url_download_json){
 /** Dinamically assign HTML events to radio buttons (will help when migrating the code to Chrome-Extension)
 * and also populate form_data for the first time (Later on the population will happen on the respective callback functions)
 */
-function bindEvents(){
-	pageSize = getPageSize();
+function bindEvents(layout){
+	
 	//update form_data with new values and call init() to repaint the map
 	$("input:radio[name=gender]").click(function(e){		
-		form_data.gender = e.currentTarget.value; 
-		$("#course_gender").html( form_data.gender.charAt(0).toUpperCase() + form_data.gender.slice(1));
-		init(sp, form_data, WINDOW_LOAD);   
+		layout.setGender(e.currentTarget.value);
+		//form_data.gender = e.currentTarget.value; 
+		$("#course_gender").html( layout.gender.charAt(0).toUpperCase() + layout.gender.slice(1));
+		
 	});
-	$("input:radio[name=ncol]").click(function(e){ 	form_data.ncols = parseInt(e.currentTarget.value); init(sp, form_data, ADD_COL); 	});
-	$("input:radio[name=drop_option]").click(function(e){ form_data.drop_option = e.currentTarget.value; redips.init() }); 
+	$("input:radio[name=ncol]").click(function(e){ 	layout.setNumberOfColumns(parseInt(e.currentTarget.value));	});
+	$("input:radio[name=drop_option]").click(function(e){ layout.drop_option = e.currentTarget.value; redips.init() }); 
 	$("#button_save").on("click",view.buttonSave);  
 	$("#button_print").on("click", view.buttonPrint);  
 	$("#button_find_updates").on("click",view.buttonFindUpdates);  
 	$("#button_add_row").on("click",view.buttonAddRow); 
 }
+
 function getFormData(){
 	var gender = $("input:radio[name=gender]:checked").val();
 	var ncols = parseInt($("input:radio[name=ncol]:checked").val());

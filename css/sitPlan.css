@@ -27,6 +27,35 @@ body {
 	margin: 0px;
 }
 
+table#studentsTable, table#arrivalsTable, table#dhammaSeatTable { /** id hardcoded in sp_tab.js */
+	width:90%;
+	border-collapse:separate;
+	border-spacing: 2px;
+	table-layout: fixed;
+	
+}
+
+table#dhammaSeatTable { /** id hardcoded in sp_tab.js */
+	width:95%;
+	border-collapse:separate;
+	border-spacing: 2px;
+	border: 0px solid black;
+}
+
+#studentsTable td.normal {
+    height: inherit !important;
+    border: 1px solid gray;
+    background-color: orange; 
+    padding: 0px;
+}	
+
+#studentsTable td.cabecera {
+    height: inherit !important;	
+	border: 1px solid gray;
+    background-color: blue; 
+    padding: 0px;
+}	
+
 #course_venue{
 	font-size: 20px;
 }
@@ -94,79 +123,28 @@ table.legend{
 
 /* end */
 
-.old_std{
-	border: 2px dashed black;
-	padding: 3px;
-	background:  #FFCC99 ;
-    background-image:none !important;
-    -webkit-animation: fade 1s ease-in-out; 
-       -moz-animation: fade 1s ease-in-out; 
-         -o-animation: fade 1s ease-in-out; 
-            animation: fade 1s ease-in-out; 
-}
-
-.new_std{
-	border: 2px dashed black;
-	padding: 3px;
-	background:  #FFFFCC;
-    background-image:none !important;
-    -webkit-animation: fade 1s ease-in-out; 
-       -moz-animation: fade 1s ease-in-out; 
-         -o-animation: fade 1s ease-in-out; 
-            animation: fade 1s ease-in-out; 
-}
-
-.no_std{
-	border: 1px dotted black;
-	padding: 3px;
-	background:  #FFFFFF;
-	height: 100px ;
-
-}
-
-@-webkit-keyframes fade {
-  0% { background-color: #113311; }
-  50%   { background-color: #FFFFFF;  }
-  100% { background-color: #113311; }
-}
-@-moz-keyframes fade {
-  0% { background-color: #113311; }
-  50%   { background-color: #FFFFFF;  }
-  100% { background-color: #113311; }
-}
-@-o-keyframes fade{
-  0% { background-color: #113311; }
-  50%   { background-color: #FFFFFF;  }
-  100% { background-color: #113311; }
-}
-@keyframes fade {
-  0% { background-color: #113311; }
-  50%   { background-color: #FFFFFF;  }
-  100% { background-color: #113311; }
-}
-
-
 
 /* make drag container visible */
 #redips-drag {
-	
 	display: table;
 	float: left;
 }
 
 /* tables */
 div#redips-drag table {
-	border-collapse: collapse;
-	margin: 10px;
+	margin: 0px;
 	font-size: 20pt;
 	text-align: center;
+	border-radius: 4px; /* Opera, Chrome */
 }
 
 /* table cells */
 div#redips-drag td {
+	border-radius: 4px; /* Opera, Chrome */
+
 	border: 0px solid navy;
 	height: 1px;
-	padding: 2px;
+	padding: 0px;
 }
 
 /* DIV elements */
