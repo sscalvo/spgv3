@@ -21,20 +21,19 @@ var view = {
 				"buttonSave": function(){ alert("boton Save!!");}
 };
 
-var id_table_students = "studentsTable";  //hardcoded in sitPlan.css
-var id_table_arrivals = "arrivalsTable";
-var id_destination = "entryPoint";
-
+//layout.js will inject different tables on sp_tab.html using this id's (of course, should also exist on sp_tab.html)
+var entry_points = { 
+						"table_arrivals": "arrivals",
+						"table_students": "students", 
+						"table_letters":  "letters",
+						"table_numbers":  "numbers"
+}
 
 //DDBS endpoints for download and upload
 var url_download_json   = "";
 var url_POST_seat_map   = "";
 var calm_tabId = 0;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-	
 
 
 
@@ -61,22 +60,12 @@ function getStudentsJSON(url_download_json){
 		success: function(course_json,status,xhr){ //json is the JSON object
 			//HERE default gender will be always 'male' (unless CALM tracks the real gender assigned to the AT. Beware a male AT can conduct only female, only male or both. Same for female AT)
 			form_data = getFormData(); //get defaut values from html form
-			var numStd = course_json.sitting[form_data.gender].old.length + course_json.sitting[form_data.gender].new.length;
-			//If 'number_of_columns' and 'number_of_rows' exist in course_json (from a previous session), use them instead the values of form_data
-			course_json.sitting[form_data.gender].number_of_columns = course_json.sitting[form_data.gender].number_of_columns || form_data.ncols; //FUTURE REMOVE! : 6 by default. course_json doesn't provide 'number_of_columns' property yet. Remove this line when CALM complies with  'number_of_columns' ( not yet 26/07) 
 			
-			//A previous session may provide 'number_of_rows', but the value of numStd may have increased (due to new arrivals), so we take the biggest:
-			var real_nrows = Math.ceil(numStd / ncols); //Number of rows based on current number of students. Thus, (numStd <= nrows*ncols) will be true always
-			var prev_nrows = course_json.sitting[form_data.gender].number_of_rows || real_nrows; // The || is in case there is no previous session
-			course_json.sitting[form_data.gender].number_of_rows = Math.max(real_nrows, prev_nrows); 
-			
-			hall = new Hall(course_json);
-			layout = new Layout(hall, id_table_students, id_destination); //form_data.gender, form_data.drop_option);
+			hall = new Hall(course_json, form_data);
+			layout = new Layout(hall, form_data.gender, "studentsTable", entry_points); //"studentsTable" must correlate name in sitPlan.css
 			layout.render();
 			
 			bindEvents(layout);
-			
-		
 			
 /*			var current_branch = init(sp, form_data, WINDOW_LOAD); //WARNING: Init modifies sp object (because of sort() )
 			if(current_branch.md5 != previous_md5[form_data.gender]){ //TODO: Es temporal. Habra que hacer un update_online_changes desde la primera visita del usuario
