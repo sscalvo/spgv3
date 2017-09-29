@@ -1,0 +1,94 @@
+
+#ft{clear:both;}
+/**/
+/* 750 centered, and backward compatibility */ 
+#std_grid,.yui-t7 {
+	margin:0px;text-align:left;
+	}
+/* 950 centered */ 
+	
+/* below required for all fluid grids; adjust widths and margins above accordingly */
+
+	/* to preserve source-order independence for Gecko */
+
+#yui-main {width:124%;}
+
+
+.yui-t7 #yui-main .yui-b {
+	display:block;margin:0px;
+}
+#yui-main .yui-b {float:none;width:auto;}
+/* GRIDS (not TEMPLATES) */
+
+.yui-gc .yui-u {float:left;margin-left:1px;width:14%;} /** age */
+
+.yui-gc div.first {margin-left:0;}
+.yui-gc div.first {width:66%;}
+#bd:after,
+.yui-g:after, 
+.yui-gc:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
+
+
+/* Basic Element Formatting */
+
+
+	
+
+	
+.name{/** Nombre */
+	height:30px;
+	border-top:#000000 0px solid;
+	margin:0;
+	padding:0px;
+	font-size: 25px;
+	font-family: Verdana, Arial, Georgia;
+	overflow: hidden;
+	word-break: break-all;
+	}
+	
+#surname{
+	height:17px;
+	margin:0;
+	padding:0;
+	overflow: hidden;
+	font-size: 15px;
+	font-family: Verdana, Arial, Georgia;
+	word-break: break-all;
+	}
+	
+.age_old{
+	height:30px;
+	margin:0px;
+	padding:0px;
+	font-size: 12px;
+	text-align: center;
+	font-family: Verdana, Arial, Georgia;
+	overflow: hidden;
+	word-break: break-all;
+	}
+
+	
+.age_new{
+	height:30px;
+	margin:0px;
+	padding:0px;
+	font-size: 18px;
+	text-align: center;
+	font-family: Verdana, Arial, Georgia;
+	overflow: hidden;
+	word-break: break-all;
+	}
+	
+#secondary{
+	height:20px;
+	border-top:#000000 0px solid;
+	margin:0;
+	padding:0;
+	}
+	
+#footer{
+	height:20px;
+	border-top:#FFFFFF 0px solid;
+	margin:0;
+	padding:0;
+	}

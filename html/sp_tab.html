@@ -5,6 +5,7 @@
 		<meta name="description" content="Visual interface to design the layout of the Hall"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/><!-- "position: fixed" fix for Android 2.2+ -->
 		<link rel="stylesheet" href="../css/sitPlan.css" type="text/css" media="screen"/>
+		<link rel="stylesheet" href="../css/cell_content.css" type="text/css" media="screen"/>
 		<link rel="stylesheet" href="../css/sitPlan_print.css" type="text/css" media="print"/>
 <!-- External libraries -->
 		<script type="text/javascript" src="../lib/jquery-3.1.1.js"></script>
@@ -27,7 +28,7 @@
 		<div >
 		<span id="course_venue" ></span> - <span id="course_gender" >Male</span> (from <span id="course_date_start" ></span> to <span id="course_date_end" ></span>)
 		
-		<!-- <span >Seating Plan Generator v2.5 </span> -->
+		<!-- <span >Seating Plan Generator v3 </span> -->
 		</div>
 		<div class="noPrint">
 		<table  width="100%" border="0">
@@ -128,7 +129,7 @@
 			</table>
 
 				<!-- !!!!!!!!  CONTENTS TO BE PRINTED !!!!!!!! -->
-			<table id="printTable" border="0">
+			<table id="printTable" border="0"  >
 				<tr >
 					<td><span id="letters"/></td>
 					<td><span id="students"/></td>

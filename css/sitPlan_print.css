@@ -23,6 +23,95 @@
 		
 	}
 
+table#studentsTable, table#arrivalsTable, table#dhammaSeatTable { /** id hardcoded in sp_tab.js */
+	width:90%;
+	border-collapse:separate;
+	border-spacing: 2px;
+	table-layout: fixed;
+}
+
+
+#studentsTable td.normal {
+    height: inherit !important;
+    border: 1px solid gray;
+    background-color: orange; 
+    padding: 0px;
+}	
+
+#lettersTable td.letters {
+    height: inherit !important;	
+	border: 1px solid gray;
+    background-color: blue; 
+    padding: 0px;
+}	
+
+#dhammaSeatTable td.numbers{ 
+	width:95%;
+	border-collapse:separate;
+	border-spacing: 2px;
+    background-color: blue; 
+	border: 1px solid black;
+}
+
+#dhammaSeatTable td.numbers{ 
+	width:95%;
+	border-collapse:separate;
+	border-spacing: 2px;
+    background-color: blue; 
+	border: 1px solid black;
+}
+
+#dhammaSeatTable td.dhamma_seat{
+	color: black; 
+    padding: 10px;
+    margin: 10px;
+	border-collapse:separate;
+	background-color: white;
+	border-radius: 4px;
+	border: 5px solid black;
+}
+
+
+/* make drag container visible */
+#redips-drag {
+	display: table;
+	float: left;
+}
+
+/* tables */
+div#redips-drag table {
+	margin: 0px;
+	font-size: 20pt;
+	text-align: center;
+	border-radius: 4px; /* Opera, Chrome */
+}
+
+/* table cells */
+div#redips-drag td {
+	border-radius: 4px; /* Opera, Chrome */
+	
+	border: 0px solid navy;
+	height: 1px;
+	padding: 0px;
+}
+
+/* DIV elements */
+.redips-drag {
+	margin: auto;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	font-size: 12pt;
+	text-align: left;
+	/*line-height: 40px;*/
+	/* background-color: white; */
+	/* round corners */
+	border-radius: 4px; /* Opera, Chrome */
+	-moz-border-radius: 4px; /* FF */
+	/*  background-color: #CDE1F2; */
+	/* border: 1px solid SteelBlue; */
+}
+
+
 #course_venue{
 	font-size: 20px;
 }
@@ -39,13 +128,6 @@
 	font-size: 20px;
 }
 
-
-td.dhamma_seat{
-	color: black !important;
-	border-radius: 4px !important;
-	height:60px;
-	border: 2px dashed black !important;
-}
 
 body {
 	font-family: arial;
@@ -98,14 +180,14 @@ table.legend{
 /* end */
 
 .old_std{
-	border: 2px dashed black;
-	padding: 3px;
+	border: 1px dashed black;
+	padding: 1px;
 	background:  #FFFFFF ;
 }
 
 .new_std{
-	border: 2px dotted black;
-	padding: 3px;
+	border: 1px dotted black;
+	padding: 1px;
 	background:  #FFFFFF;
 
 }
@@ -119,47 +201,6 @@ table.legend{
 }
 
 
-/* make drag container visible */
-#redips-drag {
-	
-	display: table;
-	float: left;
-}
-
-/* tables */
-div#redips-drag table {
-	
-	border-collapse: collapse;
-	margin: 10px;
-	font-size: 20pt;
-	text-align: center;
-}
-
-/* table cells */
-div#redips-drag td {
-	border: 0px;
-	height: 1px;
-	padding: 2px;
-}
-
-/* DIV elements */
-.redips-drag {
-	margin: auto;
-	margin-bottom: 0px;
-	margin-top: 0px;
-	font-size: 12pt;
-	text-align: left;
-	width: 180px;
-	height: 80px;
-	/*line-height: 40px;*/
-	/* background-color: white; */
-	/* round corners */
-	border-radius: 4px; /* Opera, Chrome */
-	-moz-border-radius: 4px; /* FF */
-	/*  background-color: #CDE1F2; */
-	/* border: 1px solid SteelBlue; */
-}
-
 .joined{ /* student joined course after map was saved and now reloaded*/
 	border: 3px solid pink;
 }
@@ -172,7 +213,7 @@ div#redips-drag td {
 
 /* orange objects */
 .orange {
-	border: 2px solid #BF6A30;
+	border: 12px solid #BF6A30;
 }
 
 

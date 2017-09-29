@@ -151,6 +151,8 @@ chrome.runtime.getBackgroundPage(function(backgroundPage) {
 	url_download_json = backgroundPage.url_download_json;//Download students JSON from CALM
 	url_POST_seat_map = backgroundPage.url_POST_seat_map; //Upload seating map to CALM
 	//console.log("getStudentsJSON: " + url_POST_seat_map);
+	
+	
 	getStudentsJSON(url_download_json);  //sort of init
 	
 });
