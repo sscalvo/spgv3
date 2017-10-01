@@ -91,6 +91,7 @@
 	border-top:#FFFFFF 0px solid;
 	margin:0;
 	padding:0;
+	cursor: default;
 	}
 #footer a{
 	font-size: 10px;
