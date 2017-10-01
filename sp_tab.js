@@ -41,6 +41,7 @@ var entry_points = { /** descriptive_name": "real id on sp_tab.html" */
 //DDBS endpoints for download and upload
 var url_download_json   = "";
 var url_POST_seat_map   = "";
+var url_course          = ""; 
 var calm_tabId = 0;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -69,11 +70,9 @@ function getStudentsJSON(url_download_json){
 		success: function(course_json,status,xhr){ //json is the JSON object
 			//HERE default gender will be always 'male' (unless CALM tracks the real gender assigned to the AT. Beware a male AT can conduct only female, only male or both. Same for female AT)
 			form_data = getFormData(); //get defaut values from html form
-			course_json.sitting["male"].number_of_columns = 7;
-			course_json.sitting["female"].number_of_columns = 5;
 			
 			hall = new Hall(course_json);
-			layout = new Layout(hall, form_data, "studentsTable", entry_points); //"studentsTable" must correlate name in sitPlan.css
+			layout = new Layout(hall, form_data, "studentsTable", entry_points, url_course); //"studentsTable" must correlate name in sitPlan.css
 			layout.render();
 			
 			//Before binding events for the first time, lets populate form controls (so far, only ncols) with the values comming from CALM (from a previous version.. If any)
@@ -167,6 +166,7 @@ chrome.runtime.getBackgroundPage(function(backgroundPage) {
 	calm_tabId = backgroundPage.calm_tabId;
 	url_download_json = backgroundPage.url_download_json;//Download students JSON from CALM
 	url_POST_seat_map = backgroundPage.url_POST_seat_map; //Upload seating map to CALM
+	url_course        = backgroundPage.url_course; //Upload seating map to CALM
 	//console.log("getStudentsJSON: " + url_POST_seat_map);
 	
 	

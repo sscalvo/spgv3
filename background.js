@@ -15,6 +15,7 @@ var regex_CALM_test = /https:\/\/test\.calm\.dhamma\.org\/(\w|-)+\/courses\/\d+\
 //Common for any DDBS (CALM, VRAY, DHAMMAREG, ..)
 var url_download_json = "";
 var url_POST_seat_map = "";
+var url_course    = ""; 
 var calm_tabId = 0;
 
 ////////////////////////////////////Enable extension only on valid URL's (the CALM4 courses)
@@ -42,6 +43,7 @@ function updateState(tab){
 		url_DDBS_course = url.substr(0,url.search(app) + app.length);;  //update the url
 		url_download_json = url_DDBS_course + ".json?place_reserved=true"; //Download students JSON from CALM
 		url_POST_seat_map = url_DDBS_course + "/assign_generated_hall_positions"; //Upload seating map to CALM
+		url_course        = url_DDBS_course + "/"; //sp_tab will have to add "147518/edit" where 147518 is std.id 
 		console.log("background.js: %cVALID URL:  " + url_DDBS_course, "color: green; ");
 		calm_tabId = tab.id;
 		enableBrowserAction(); //Active icon
