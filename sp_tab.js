@@ -22,11 +22,20 @@ var view = {
 };
 
 //layout.js will inject different tables on sp_tab.html using this id's (of course, should also exist on sp_tab.html)
-var entry_points = { 
+var entry_points = { /** descriptive_name": "real id on sp_tab.html" */
 						"table_arrivals": "arrivals",
 						"table_students": "students", 
 						"table_letters":  "letters",
-						"table_numbers":  "numbers"
+						"table_numbers":  "numbers",
+						"venue_name":     "venue_name",
+						"start_date":     "start_date",
+						"start_year":     "start_year",
+						"end_year":     "end_year",
+						"end_date":       "end_date",
+						"gender":         "gender",
+						"num_new":        "num_new",
+						"num_old":        "num_old",
+						"num_total":      "num_total"
 }
 
 //DDBS endpoints for download and upload
@@ -60,11 +69,16 @@ function getStudentsJSON(url_download_json){
 		success: function(course_json,status,xhr){ //json is the JSON object
 			//HERE default gender will be always 'male' (unless CALM tracks the real gender assigned to the AT. Beware a male AT can conduct only female, only male or both. Same for female AT)
 			form_data = getFormData(); //get defaut values from html form
+			course_json.sitting["male"].number_of_columns = 7;
+			course_json.sitting["female"].number_of_columns = 5;
 			
-			hall = new Hall(course_json, form_data);
-			layout = new Layout(hall, form_data.gender, "studentsTable", entry_points); //"studentsTable" must correlate name in sitPlan.css
+			hall = new Hall(course_json);
+			layout = new Layout(hall, form_data, "studentsTable", entry_points); //"studentsTable" must correlate name in sitPlan.css
 			layout.render();
 			
+			//Before binding events for the first time, lets populate form controls (so far, only ncols) with the values comming from CALM (from a previous version.. If any)
+			var ncols        = course_json.sitting[form_data.gender].number_of_columns || form_data.ncols;  //TODO remove "|| form_data" when number_of_colums is implemented by CALM (not yet 1 Oct 2017)
+			$("#" + ncols + "col").attr('checked', true);
 			bindEvents(layout);
 			
 /*			var current_branch = init(sp, form_data, WINDOW_LOAD); //WARNING: Init modifies sp object (because of sort() )
@@ -87,13 +101,16 @@ function getStudentsJSON(url_download_json){
 function bindEvents(layout){
 	
 	//update form_data with new values and call init() to repaint the map
-	$("input:radio[name=gender]").click(function(e){		
-		layout.setGender(e.currentTarget.value);
+	$("input:radio[name=gender]").click(function(e){	
+		var gender = e.currentTarget.value;
+		layout.setGender(gender);
 		//form_data.gender = e.currentTarget.value; 
+		//if going, for example, from male to female map, then update the ncol radio-button to the respective "female" ncol value
+		$("#" + layout[gender].ncols + "col").prop('checked', true);
 		$("#course_gender").html( layout.gender.charAt(0).toUpperCase() + layout.gender.slice(1));
 		
 	});
-	$("input:radio[name=ncol]").click(function(e){ 	layout.setNumberOfColumns(parseInt(e.currentTarget.value));	});
+	$("input:radio[name=ncol]").click(function(e){ alert("ncol updated");	layout.setNumberOfColumns(parseInt(e.currentTarget.value));	});
 	$("input:radio[name=drop_option]").click(function(e){ layout.drop_option = e.currentTarget.value; redips.init() }); 
 	$("#button_save").on("click",view.buttonSave);  
 	$("#button_print").on("click", view.buttonPrint);  
