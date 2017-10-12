@@ -71,8 +71,16 @@ function getStudentsJSON(url_download_json){
 			//HERE default gender will be always 'male' (unless CALM tracks the real gender assigned to the AT. Beware a male AT can conduct only female, only male or both. Same for female AT)
 			form_data = getFormData(); //get defaut values from html form
 			
+				//TODO: Preparar el json para parecer que CALM si que nos esta enviando el numero de columnas.
+				//TODO BORRAR esta linea en cuanto CALM nos envie https://mail.google.com/mail/u/0/#search/number_of_columns/15eaf12423e2e1f8
+				form_data.ncols = getLastNumberOfColumns(course_json, form_data.gender) || form_data.ncols;
+			
+			//If 'number_of_columns' exist in course_json (from a previous session), use it instead of form_data.ncols
+			course_json.sitting.male.number_of_columns = course_json.sitting.male.number_of_columns || form_data.ncols; 
+			course_json.sitting.female.number_of_columns = course_json.sitting.female.number_of_columns  || form_data.ncols; 
+			
 			hall = new Hall(course_json);
-			layout = new Layout(hall, form_data, "studentsTable", entry_points, url_course); //"studentsTable" must correlate name in sitPlan.css
+			layout = new Layout(hall, form_data.gender, "studentsTable", entry_points, url_course); //"studentsTable" must correlate name in sitPlan.css
 			layout.render();
 			
 			//Before binding events for the first time, lets populate form controls (so far, only ncols) with the values comming from CALM (from a previous version.. If any)
@@ -93,6 +101,47 @@ function getStudentsJSON(url_download_json){
 	});
 }
 
+/**
+* SOLUCION TEMPORAL a la carencia de number_of_colums por parte de CALM:
+
+//TODO: En cuanto CALM envie el campo number_of_columns (tanto para male como para female), este metodo dejara de tener sentido
+
+* Recorrer todas las generated_hall_position[gender] hasta encontrar la "B2" y extraer el numero de columnas (previamente guardado de la misma manera)
+* El formato esperado es "B2:x" donde x es el number_of_columns. El campo será modificado a "B2" (i.e: Dhamma Sobhana no tiene es "A1". "B2" parece bastante seguro)
+* y se creará el atributo. ESTE METODO PUEDE SER BORRADO en cuanto CALM envie el campo number_of_columns (tanto para male como para female)
+* There is also a correlating setFakeNumberOfColumns() in layout.js !!
+* @return 
+*/
+function getLastNumberOfColumns(j, gender){
+	//MALE
+	var v = j.sitting.male.old.concat(j.sitting.male.new);
+	var foundB2 = false;
+	var i = 0;
+	while(!foundB2 && i < v.length){
+		var b2 = v[i].generated_hall_position;
+		if (b2.substr(0,2) === "B2"){
+			foundB2 = true;
+			j.sitting.male.number_of_columns = b2.substr(3,1); //extract the number of columns
+			v[i].generated_hall_position = "B2"; //put things back to 'normal'
+		}
+		i++;
+	}
+	
+	//FEMALE
+	 v = j.sitting.female.old.concat(j.sitting.female.new);
+	foundB2 = false;
+	 i = 0;
+	while(!foundB2 && i < v.length){
+		var b2 = v[i].generated_hall_position;
+		if (b2.substr(0,2) === "B2"){
+			foundB2 = true;
+			j.sitting.female.number_of_columns = b2.substr(3,1); //extract the number of columns
+			v[i].generated_hall_position = "B2"; //put things back to 'normal'
+		}
+		i++;
+	}
+	return j.sitting[gender].number_of_columns;
+}
 
 /** Dinamically assign HTML events to radio buttons (will help when migrating the code to Chrome-Extension)
 * and also populate form_data for the first time (Later on the population will happen on the respective callback functions)
@@ -109,9 +158,10 @@ function bindEvents(layout){
 		$("#course_gender").html( layout.gender.charAt(0).toUpperCase() + layout.gender.slice(1));
 		
 	});
-	$("input:radio[name=ncol]").click(function(e){ alert("ncol updated");	layout.setNumberOfColumns(parseInt(e.currentTarget.value));	});
+	$("input:radio[name=ncol]").click(function(e){ layout.setNumberOfColumns(parseInt(e.currentTarget.value));	});
 	$("input:radio[name=drop_option]").click(function(e){ layout.drop_option = e.currentTarget.value; redips.init() }); 
-	$("#button_save").on("click",view.buttonSave);  
+	$("#button_save").on("click",function(e){ layout.save_to_CALM(); } );  
+	$("#button_reset").on("click",function(e){ layout.reset_all_positions(); } );  
 	$("#button_print").on("click", view.buttonPrint);  
 	$("#button_find_updates").on("click",view.buttonFindUpdates);  
 	$("#button_add_row").on("click",view.buttonAddRow); 

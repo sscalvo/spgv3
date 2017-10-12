@@ -1,0 +1,20 @@
+
+
++ajustar css de Print
++poner texto "alt" en nombre y apellidos para poder seguir viendolo en caso de word-wrap:break-all 
+-Añadir info (dentro de la zona printable) numero de old, num new, num total, genero, nombre centro, fechas
+
++a la hora de SAVE, incluir en "A1".generated_hall_position el numero de columnas (para male y para female)
+
++pedir que activen el endpoint en el servidor *produccion* 
+//Endpoint url is NOT this: "https://test.calm.dhamma.org/es/courses/119/course_applications/assign_generated_hall_positions"
+//but this "https://test.calm.dhamma.org/es/course/119/course_applications/assign_generated_hall_positions", so lets remove the 's' from 'courses'
+
++Ubicación del botón:
+Ahora document.getElementById("course-applications-datatable_filter").appendChild(btnSPG);
+Ryan propuso: $("#seating-plan-generator-btn-placeholder").data('label')
+
++Solicitar el campo "hall_position"
+
++ https://test.calm.dhamma.org/en/courses/119/course_applications
+cuando pasas de 4 (2 filas) a 8, solo se muestra una fila: al hacer click en el radio-button hay que resetear todas las generated_hall_positions
