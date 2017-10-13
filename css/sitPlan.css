@@ -46,15 +46,22 @@ table#studentsTable, table#arrivalsTable, table#dhammaSeatTable { /** id hardcod
 #lettersTable td.letters {
     height: inherit !important;	
 	border: 1px solid gray;
-    background-color: blue; 
     padding: 0px;
 }	
 
-#dhammaSeatTable td.numbers{ 
+#dhammaSeatTable td.numbers_male{ 
 	width:95%;
 	border-collapse:separate;
 	border-spacing: 2px;
-    background-color: blue; 
+    background-color: rgba(87,170,242,1); 
+	border: 1px solid black;
+}
+
+#dhammaSeatTable td.numbers_female{ 
+	width:95%;
+	border-collapse:separate;
+	border-spacing: 2px;
+    background-color: rgba(125,199,113,1); 
 	border: 1px solid black;
 }
 
@@ -68,6 +75,14 @@ table#studentsTable, table#arrivalsTable, table#dhammaSeatTable { /** id hardcod
 	border: 5px solid black;
 }
 
+.lettersTable_male td{
+    background-color: rgba(87,170,242,1); 
+}
+
+.lettersTable_female td{
+	background: rgba(125,199,113,1); 
+}
+
 .std{
 	border: 0px dashed black;
 	padding: 0px;
@@ -77,26 +92,26 @@ table#studentsTable, table#arrivalsTable, table#dhammaSeatTable { /** id hardcod
 .old_male{
 	border: 1px dashed black;
 	padding: 0px;
-	background:  steelBlue ;
+	background:  snow ;
 }
 
 .new_male{
 	border: 1px dotted black;
 	padding: 1px;
-	background:  powderBlue;
+	background:  snow;
 
 }
 
 .old_female{
 	border: 1px dashed black;
 	padding: 0px;
-	background:  Green ;
+	background:  snow ;
 }
 
 .new_female{
 	border: 1px dotted black;
 	padding: 1px;
-	background:  lightGreen;
+	background:  snow;
 
 }
 

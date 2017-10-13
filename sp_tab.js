@@ -154,7 +154,7 @@ function bindEvents(layout){
 		layout.setGender(gender);
 		//form_data.gender = e.currentTarget.value; 
 		//if going, for example, from male to female map, then update the ncol radio-button to the respective "female" ncol value
-		$("#" + layout[gender].ncols + "col").prop('checked', true);
+		$("#" + layout.getNumberOfColumns(gender) + "col").prop('checked', true);
 		$("#course_gender").html( layout.gender.charAt(0).toUpperCase() + layout.gender.slice(1));
 		
 	});
