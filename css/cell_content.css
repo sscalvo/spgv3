@@ -1,5 +1,22 @@
 
-	
+.caption_animated{
+	overflow:hidden;
+	border-radius: 0px;
+    -webkit-animation: fadeinout 1s 5 ease-in-out backwards;
+    animation: fadeinout 1s 5  ease-in-out backwards;
+    opacity: 1
+}
+@-webkit-keyframes fadeinout {
+  0% { opacity: 0;}
+  100% { opacity: 1;  }
+}
+
+@keyframes fadeinout {
+  0% { opacity: 1;}
+  50% { opacity: 0;}
+  100% { opacity: 1;  }
+}
+
 .caption_old_male{
 	overflow:hidden;
 	background: rgba(87,170,242,1);/* Old Browsers */
@@ -9,8 +26,8 @@
 
 .caption_new_male{
 	overflow:hidden;
-	background: rgba(192,193,194,1);/* Old Browsers */
-	background: -webkit-linear-gradient(top, rgba(192,193,194,1) 0%, rgba(237,241,245,0) 100%); /* Chrome10+,Safari5.1+ */
+	background: rgba(220,220,220,1);/* Old Browsers */
+	background: -webkit-linear-gradient(top, rgba(220,220,220,1) 0%, rgba(237,241,245,0) 100%); /* Chrome10+,Safari5.1+ */
 	border-radius: 4px;
 }	
 
@@ -23,8 +40,8 @@
 
 .caption_new_female{
 	overflow:hidden;
-	background: rgba(192,193,194,1);/* Old Browsers */
-	background: -webkit-linear-gradient(top, rgba(192,193,194,1) 0%, rgba(237,241,245,0) 100%); /* Chrome10+,Safari5.1+ */
+	background: rgba(220,220,220,1);/* Old Browsers */
+	background: -webkit-linear-gradient(top, rgba(220,220,220,1) 0%, rgba(237,241,245,0) 100%); /* Chrome10+,Safari5.1+ */
 	border-radius: 4px;
 }	
 

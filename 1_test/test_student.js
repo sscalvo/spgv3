@@ -21,8 +21,8 @@ var json_sp = {
 				"courses_sat": 8,
 				"courses_served": 1,
 				"room": "12",
-				"generated_hall_position": "A1",
-				"hall_position": "near window"
+				"hall_position": "A1",
+				"lgcy_hall_position": "near window"
 			}],
 			"new": [{
 				"id": 9,
@@ -39,8 +39,8 @@ var json_sp = {
 				"courses_sat": 0,
 				"courses_served": 0,
 				"room": "3",
-				"generated_hall_position": "B3",
-				"hall_position": "near aisle"
+				"hall_position": "B3",
+				"lgcy_hall_position": "near aisle"
 			}]
 		},
 		"female": {
@@ -59,8 +59,8 @@ var json_sp = {
 				"courses_sat": 6,
 				"courses_served": 2,
 				"room": "7",
-				"generated_hall_position": "A1",
-				"hall_position": "back wall"
+				"hall_position": "A1",
+				"lgcy_hall_position": "back wall"
 			}],
 			"new": [{
 				"id": 24,
@@ -77,8 +77,8 @@ var json_sp = {
 				"courses_sat": 0,
 				"courses_served": 0,
 				"room": "8",
-				"generated_hall_position": "B4",
-				"hall_position": ""
+				"hall_position": "B4",
+				"lgcy_hall_position": ""
 			}]
 		}
 	},
@@ -98,8 +98,8 @@ var json_sp = {
 			"courses_sat": 4,
 			"courses_served": 3,
 			"room": "23",
-			"generated_hall_position": "",
-			"hall_position": ""
+			"hall_position": "",
+			"lgcy_hall_position": ""
 		}],
 		"female": [{
 			"id": 33,
@@ -116,8 +116,8 @@ var json_sp = {
 			"courses_sat": 6,
 			"courses_served": 2,
 			"room": "7",
-			"generated_hall_position": "",
-			"hall_position": ""
+			"hall_position": "",
+			"lgcy_hall_position": ""
 		}]
 	}
 };
