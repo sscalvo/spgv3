@@ -33,6 +33,7 @@ var url_download_json   = "";
 var url_POST_seat_map   = "";
 var url_course          = ""; 
 var calm_tabId = 0;
+var screenBlock = undefined;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //\_________________________________________________________A U T O - U P D A T E R______________________________________________/
@@ -50,6 +51,7 @@ function getTime(){
 * @param url_download_json  url for this course
 * TODO: deferred objects https://stackoverflow.com/questions/14754619/jquery-ajax-success-callback-function-definition
 */
+var zz = 0;
 function ajax_get(url_download_json, callback, description){
 	$.ajax({ 
 		url: url_download_json,
@@ -107,7 +109,7 @@ function init(course_json){
 			}
 			
 			//Before binding events for the first time, lets populate form controls (so far, only ncols) with the values comming from CALM (from a previous version.. If any)
-			var ncols        = course_json.sitting[form_data.gender].number_of_columns || form_data.ncols;  //TODO remove "|| form_data" when number_of_colums is implemented by CALM (not yet 1 Oct 2017)
+			var ncols = hall.getNumberOfColumns(form_data.gender);  //TODO remove "|| form_data" when number_of_colums is implemented by CALM (not yet 1 Oct 2017)
 			$("#" + ncols + "col").attr('checked', true);
 			bindEvents(layout);
 			//If after a while, the AT reopens the map, init() wil be triggered. If ARRIVALS/DEPARTURES happened, find them:
@@ -115,115 +117,49 @@ function init(course_json){
 
 }
 
-/**
-* SOLUCION TEMPORAL a la carencia de number_of_colums por parte de CALM:
-
-//TODO: En cuanto CALM envie el campo number_of_columns (tanto para male como para female), este metodo dejara de tener sentido
-
-* Recorrer todas las hall_position[gender] hasta encontrar la "A1" y extraer el numero de columnas (previamente guardado de la misma manera)
-* El formato esperado es "A1:x" donde x es el number_of_columns. El campo será modificado a "A1" (i.e: Dhamma Sobhana no tiene es "A1". "A1" parece bastante seguro)
-* y se creará el atributo. ESTE METODO PUEDE SER BORRADO en cuanto CALM envie el campo number_of_columns (tanto para male como para female)
-* There is also a correlating setFakeNumberOfColumns() in layout.js !!
-* @return 
-*/
-function getLastNumberOfColumns(j, gender){
-	//MALE
-	var v = j.sitting.male.old.concat(j.sitting.male.new);
-	var foundA1 = false;
-	var i = 0;
-	while(!foundA1 && i < v.length){
-		var a1 = v[i].hall_position;
-		if (a1.substr(0,2) === "A1"){
-			foundA1 = true;
-			j.sitting.male.number_of_columns = a1.substr(3,1); //extract the number of columns
-			//v[i].hall_position = "A1"; //put things back to 'normal'
-		}
-		i++;
-	}
-	
-	//FEMALE
-	 v = j.sitting.female.old.concat(j.sitting.female.new);
-	foundA1 = false;
-	 i = 0;
-	while(!foundA1 && i < v.length){
-		var a1 = v[i].hall_position;
-		if (a1.substr(0,2) === "A1"){
-			foundA1 = true;
-			j.sitting.female.number_of_columns = a1.substr(3,1); //extract the number of columns
-			//v[i].hall_position = "A1"; //put things back to 'normal'
-		}
-		i++;
-	}
-	return j.sitting[gender].number_of_columns;
-}
-
-
-/**
-* clon de  getLastNumberOfColumns
-*/
-function getLastNumberOfRows(j, gender, ncols){
-	//MALE
-	var v = j.sitting.male.old.concat(j.sitting.male.new);
-	var default_rows = Math.ceil(v.length / ncols);
-	var foundA1 = false;
-	var i = 0;
-	while(!foundA1 && i < v.length){
-		var a1 = v[i].hall_position;
-		if (a1.substr(0,2) === "A1"){
-			foundA1 = true;
-			j.sitting.male.number_of_rows = Math.max(parseInt(a1.substr(5,1)), default_rows); //extract the number of rows
-			v[i].hall_position = "A1"; //put things back to 'normal'
-		}
-		i++;
-	}
-	
-	//FEMALE
-	 v = j.sitting.female.old.concat(j.sitting.female.new);
-	default_rows = Math.ceil(v.length / ncols);
-	foundA1 = false;
-	 i = 0;
-	while(!foundA1 && i < v.length){
-		var a1 = v[i].hall_position;
-		if (a1.substr(0,2) === "A1"){
-			foundA1 = true;
-			j.sitting.female.number_of_rows = Math.max(parseInt(a1.substr(5,1)), default_rows); //extract the number of rows
-			v[i].hall_position = "A1"; //put things back to 'normal'
-		}
-		i++;
-	}
-	return j.sitting[gender].number_of_rows;
-}
-
 /** Dinamically assign HTML events to radio buttons (will help when migrating the code to Chrome-Extension)
 * and also populate form_data for the first time (Later on the population will happen on the respective callback functions)
 */
+var initialized = false;
 function bindEvents(layout){
-	
-	//update form_data with new values and call init() to repaint the map
-	$("input:radio[name=gender]").click(function(e){
-		var gender = e.currentTarget.value;
-		layout.setGender(gender);
-		//form_data.gender = e.currentTarget.value; 
-		//if going, for example, from male to female map, then update the ncol radio-button to the respective "female" ncol value
-		$("#" + layout.getNumberOfColumns(gender) + "col").prop('checked', true);
-		$("#course_gender").html( layout.gender.charAt(0).toUpperCase() + layout.gender.slice(1));
-		
-	});
-	$("input:radio[name=ncol]").click(function(e){ VIEW_block(); layout.setNumberOfColumns(parseInt(e.currentTarget.value), VIEW_unblock);	});
-	$("input:radio[name=drop_option]").click(function(e){ layout.drop_option = e.currentTarget.value; redips.init() }); 
-	$("#button_save").on("click", function(e) { save_map() } );  
-	$("#button_reset").on("click",function(e){ layout.reset_all_positions(); } );  
-	$("#button_print").on("click", view.buttonPrint);  
-	$("#button_find_updates").on("click", function() { save_map(); ajax_get(url_download_json, update_course_changes, "FIND_UPDATES"); } ); 
-	$("#button_find_id").on("click", function(){ var r = layout.findStudentById(1238); } ); 
+	if (!initialized){
+		initialized = true;
+		//update form_data with new values and call init() to repaint the map
+		$("input:radio[name=gender]").click(function(e){
+			var gender = e.currentTarget.value;
+			layout.setGender(gender);
+			//form_data.gender = e.currentTarget.value; 
+			//if going, for example, from male to female map, then update the ncol radio-button to the respective "female" ncol value
+			$("#" + layout.getNumberOfColumns(gender) + "col").prop('checked', true);
+			$("#course_gender").html( layout.gender.charAt(0).toUpperCase() + layout.gender.slice(1));
+			
+		});
+		$("input:radio[name=ncol]").click(function(e){ //Update number_of_columns in CALM
+			//Avisar de que con el cambio del numero de columnas, las posiciones se resetearan (YES, NO, ¿CANCEL?)
+			if (confirm("Changing number of columns will erase your current layout")){
+				VIEW_block();
+				var new_cols = parseInt(e.currentTarget.value);
+				layout.reset_all_positions(new_cols, function f(){ajax_get(url_download_json, init, "COLS UPDATED");} );
+				//Tip: VIEW_unblock is hardcoded in ¿sp_tab.js--->init()?
+			}else{
+				var ncols = hall.getNumberOfColumns(layout.gender);
+				 $("input:radio[name=ncol]").val([ncols]);
+			}
+		});
+		$("input:radio[name=drop_option]").click(function(e){ layout.drop_option = e.currentTarget.value; redips.init() }); 
+		$("#button_save").on("click", function(e) { save_to_CALM() } );  
+		$("#button_reset").on("click",function(e){ layout.reset_all_positions(); } );  
+		$("#button_print").on("click", view.buttonPrint);  
+		$("#button_find_updates").on("click", function() { save_to_CALM(); ajax_get(url_download_json, update_course_changes, "FIND_UPDATES"); } ); 
+		$("#button_find_id").on("click", function(){ var r = layout.findStudentById(1238); } ); 
+		}
 }
-
-function save_map(){ 
+function save_to_CALM(){ 
 	VIEW_block();
 	layout.save_to_CALM( VIEW_unblock); 
 }
 
-function VIEW_block() {   screenBlock.style.display = "block"; }
+function VIEW_block(msg) {   screenBlock.style.display = "block"; }
 
 function VIEW_unblock() { screenBlock.style.display = "none";  }
 
@@ -247,7 +183,7 @@ function renderById(hall){
 // -------------------------------------------------
 
 //Fade screen when user clicks button
-var screenBlock = document.createElement('div');
+screenBlock = document.createElement('div');
 //screenBlock.setAttribute("id", "locker");
 //screenBlock.setAttribute("class", "locker");
 screenBlock.style.position = "fixed";
@@ -269,7 +205,7 @@ screenBlock.style.color = "rgba(140, 210, 0, 0.8)";
 var img = "<img src='" + chrome.extension.getURL("img/circular.gif") + "'>";
 screenBlock.innerHTML = "<p>Connecting with CALM4..</p><br/>" + img;
 
-//document.body.appendChild(screenBlock);  //DESACTIVAR
+document.body.appendChild(screenBlock);  //DESACTIVAR
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
