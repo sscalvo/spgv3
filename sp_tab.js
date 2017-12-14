@@ -111,7 +111,7 @@ function init(course_json){
 			//Before binding events for the first time, lets populate form controls (so far, only ncols) with the values comming from CALM (from a previous version.. If any)
 			var ncols = hall.getNumberOfColumns(form_data.gender);  //TODO remove "|| form_data" when number_of_colums is implemented by CALM (not yet 1 Oct 2017)
 			$("#" + ncols + "col").attr('checked', true);
-			bindEvents(layout);
+			bindEvents();
 			//If after a while, the AT reopens the map, init() wil be triggered. If ARRIVALS/DEPARTURES happened, find them:
 			
 
@@ -121,7 +121,7 @@ function init(course_json){
 * and also populate form_data for the first time (Later on the population will happen on the respective callback functions)
 */
 var initialized = false;
-function bindEvents(layout){
+function bindEvents(){
 	if (!initialized){
 		initialized = true;
 		//update form_data with new values and call init() to repaint the map
@@ -135,14 +135,14 @@ function bindEvents(layout){
 			
 		});
 		$("input:radio[name=ncol]").click(function(e){ //Update number_of_columns in CALM
+			var ncols = hall.getNumberOfColumns(layout.gender);
+			var new_cols = parseInt(e.currentTarget.value);
 			//Avisar de que con el cambio del numero de columnas, las posiciones se resetearan (YES, NO, ¿CANCEL?)
-			if (confirm("Changing number of columns will erase your current layout")){
+			if (confirm("\n\nChanging number of columns will change the arrangement of your current layout.\n\n\n Are you sure you want to change from " + ncols + " to " + new_cols + " columns?")){
 				VIEW_block();
-				var new_cols = parseInt(e.currentTarget.value);
 				layout.reset_all_positions(new_cols, function f(){ajax_get(url_download_json, init, "COLS UPDATED");} );
 				//Tip: VIEW_unblock is hardcoded in ¿sp_tab.js--->init()?
 			}else{
-				var ncols = hall.getNumberOfColumns(layout.gender);
 				 $("input:radio[name=ncol]").val([ncols]);
 			}
 		});
@@ -152,7 +152,7 @@ function bindEvents(layout){
 		$("#button_print").on("click", view.buttonPrint);  
 		$("#button_find_updates").on("click", function() { save_to_CALM(); ajax_get(url_download_json, update_course_changes, "FIND_UPDATES"); } ); 
 		$("#button_find_id").on("click", function(){ var r = layout.findStudentById(1238); } ); 
-		}
+	}
 }
 function save_to_CALM(){ 
 	VIEW_block();
