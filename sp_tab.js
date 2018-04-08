@@ -206,6 +206,7 @@ var img = "<img src='" + chrome.extension.getURL("img/circular.gif") + "'>";
 screenBlock.innerHTML = "<p>Connecting with CALM4..</p><br/>" + img;
 
 document.body.appendChild(screenBlock);  //DESACTIVAR
+//$('.spinner').toggleClass('stop');
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

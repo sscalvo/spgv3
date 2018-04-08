@@ -6,6 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/><!-- "position: fixed" fix for Android 2.2+ -->
 		<link rel="stylesheet" href="../css/sitPlan.css" type="text/css" media="screen"/>
 		<link rel="stylesheet" href="../css/cell_content.css" type="text/css" media="screen"/>
+		<link rel="stylesheet" href="../css/spinador.css" type="text/css" media="screen"/>
 		<link rel="stylesheet" href="../css/sitPlan_print.css" type="text/css" media="print"/>
 <!-- External libraries -->
 		<script type="text/javascript" src="../lib/jquery-3.1.1.js"></script>
@@ -31,15 +32,12 @@
 		<!-- <span >Seating Plan Generator v3 </span> -->
 		</div>
 		<div class="noPrint">
-		<table  width="100%" border="1">
+		<table  width="100%" border="3">
 				<tr>
-					<td colspan="5"><span id="info_display" class="user_info">Saved</span></td>
+					<td colspan="6"><span id="info_display" class="user_info">Saved</span></td>
 				</tr>
 				<tr>
-					<td class="title" >Select number of columns:</td>
-					<td class="title">Select gender:</td>
-					<td rowspan="1"><input id="button_add_row" type="button" value="Add extra row" /> (Extra <b>empty</b> rows wont be saved) </td>
-					<td rowspan="1"><input id="button_print" type="button" value="Print.." /> <br/> </td>
+					<td ><input id="button_print" type="button" value="Print.." /> <br/> </td>
 					<td rowspan="2">
 						<div class="orange">
 							<table>
@@ -66,10 +64,8 @@
 					
 				
 					<!-- <td class="title">Drag&Drop behaviour:</td> -->
-				</tr>
-				<tr>
 					<td>
-						<div style="margin-left:0px;">
+						<div style="margin-left:0px;">Select number of columns:
 							<form id="cols">
 								<input type="radio" id="4col" name="ncol" value="4" />
 								<label for="4col">4</label>
@@ -84,39 +80,35 @@
 							</form>
 						</div>
 					</td>
-					<td>
+					<td>Select gender:
 						<div style="margin-left:0px;">
 						<form id="genders">
+							<input type="radio" id="female" name="gender" value="female" />
+							<label for="lif">Female</label>  <br>
 							<input type="radio" id="male" name="gender" value="male" checked="true"/>
 							<label for="lim">Male</label>
-							<input type="radio" id="female" name="gender" value="female" />
-							<label for="lif">Female</label>   
 						</form>	
 						</div>
-					</td>
-					<td></td>
-					<td></td>
-
-				<!--
-				<td class="title">Map legend:</td>
-				<tr>
-				-->
-				<!--
-				<tr><td class="title">Printing:</td></tr>
-					<tr><td>
-						<div style="margin-left:20px;">
-						<input type="submit" style="float:left;" id="btnPrint" value="Print Seating plan..." >
-					</div>
-					</td></tr>
-				-->
+					</td>			
+				
 					<td><div style="margin-left:20px;">
 						<form id="drop_options">
-							<input type="radio" id="switch" name="drop_option" value="switch" checked="true"/><label for="switch">Switch students on drop</label>
+							<input type="radio" id="switch" name="drop_option" value="switch" checked="true"/>
+							<label for="switch">Switch students on drop</label>
+							<br>
 							<input type="radio" id="switching" name="drop_option" value="shift" />
 							<label for="switching"  >Switch students continuosly</label> 
 						</form>
 						</div>
 					</td>
+					
+					<td>
+						<div class="spinner">
+						  <div class="bounce1"></div>
+	
+						</div>
+					</td>
+					
 				<!--	-->
 				</tr>
 		</table>
